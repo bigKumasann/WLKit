@@ -40,6 +40,14 @@ typedef enum : NSUInteger {
  */
 - (void)videoRecordManager:(WLVideoRecordManager *)manager recordDuration:(double)duration;
 
+/**
+ 截屏成功的回调
+
+ @param manager 录制器
+ @param screenShot 截屏图片
+ */
+- (void)videoRecordManager:(WLVideoRecordManager *)manager screenShot:(UIImage *)screenShot;
+
 @end
 
 @interface WLVideoRecordManager : NSObject
@@ -98,10 +106,8 @@ typedef enum : NSUInteger {
 
 /**
  截屏方法
-
- @return 图片
  */
-- (UIImage *)screenShot;
+- (UIImage *)takeScreenShot;
 
 @end
 

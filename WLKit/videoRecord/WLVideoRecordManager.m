@@ -60,7 +60,7 @@
 /**
  截屏图片
  */
-@property (nonatomic, strong)           UIImage                                 *screenShot;
+@property (nonatomic, strong)           UIImage                                 *screenShotImage;
 
 /**
  是否处于preview状态
@@ -142,14 +142,16 @@
     
 }
 
-- (UIImage *)screenShot {
+- (UIImage *)takeScreenShot {
+    
+    if (!self.shouldGetScreenShot) {
+        return nil;
+    }
     
     screenShotSema = dispatch_semaphore_create(0);
     self.shouldGetScreenShot = YES;
-    
     dispatch_semaphore_wait(screenShotSema, DISPATCH_TIME_FOREVER);
-    
-    return self.screenShot;
+    return self.screenShotImage;
     
 }
 
@@ -217,8 +219,8 @@
     
     @synchronized (self) {
         if (self.shouldGetScreenShot) {
-            self.screenShot = [self takePhoto:sampleBuffer];
             self.shouldGetScreenShot = NO;
+            self.screenShotImage = [self takePhoto:sampleBuffer];
             dispatch_semaphore_signal(screenShotSema);
         }
     }
